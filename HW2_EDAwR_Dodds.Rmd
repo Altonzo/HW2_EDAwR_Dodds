@@ -143,7 +143,13 @@ income for the entire US.
 Write a short paragraph describing the distribution of median incomes.
 
 ```{r}
-# ggplot(???) + geom_histogram(???)
+ggplot(county_df) + geom_histogram(aes(x=Income), fill="red", colour="black")
+ggplot(county_df) + geom_boxplot(aes(x="Boxplot of Median Household Income Across America", y=Income))
+ggplot(county_df) + geom_violin(aes(x="Boxplot of Median Household Income Across America", y=Income))
+ggplot(county_df) + geom_density(aes(x=Income))
+
+
+
 ```
 
 ### Problem 3 - Histogram of total population
