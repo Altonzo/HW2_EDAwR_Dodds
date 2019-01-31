@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Step 1 - Familiarize yourself with the data and the assignment
 
+
 In this assignment you'll do some exploratory data analysis
 with R on a dataset US census information based on the [American Community Survey](https://www.census.gov/programs-surveys/acs/). The version of
 this data that we'll be using is from a Kaggle dataset. See
