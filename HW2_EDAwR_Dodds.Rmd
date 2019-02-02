@@ -126,7 +126,7 @@ str(county_df)
 str(county_MI)
 ```
 
-The county_MI data frame contains data for Michigan only and includes an
+The county_MI data frame contains data for Michigan only and includes a
 peninsula field. See **census_data_prep.R** to see how this field was
 created. It involves scraping a table out of a web page.
 
@@ -148,7 +148,7 @@ ggplot(county_df) + geom_boxplot(aes(x="Boxplot of Median Household Income Acros
 ggplot(county_df) + geom_violin(aes(x="Boxplot of Median Household Income Across America", y=Income))
 ggplot(county_df) + geom_density(aes(x=Income))
 
-
+# Median income is centered around approximately $42,000.  It is skewed to the right, where there are very few people earning more than $75,000, relative to the population. Based on the violin plot, the majority of the population lies between $30,000 - $60,000.
 
 ```
 
@@ -157,7 +157,7 @@ ggplot(county_df) + geom_density(aes(x=Income))
 Create a histogram of total population for counties in the US. 
 
 ```{r histo_totpop}
-
+ggplot(county_df) + geom_histogram(aes(x=TotalPop), fill="#884444", colour="blue")
 ```
 
 Repeat the histogram about but make the following style changes to the plot.
@@ -168,15 +168,25 @@ Repeat the histogram about but make the following style changes to the plot.
 * Change the colors of the bars to something other than the default black
 
 ```{r histo_stylechanges}
-
+ggplot(county_df) + 
+  geom_histogram(aes(x=TotalPop), 
+              fill="gray", colour="purple") +
+  ggtitle("Distribution of population for US counties") + xlab("Total Population") + ylab("Number of counties")
 ```
 
 Repeat the histogram but only for counties with less than 1.5 million people. Do NOT use
 dplyr to do the filtering - instead, use boolean indexing (see intro to dataframes Rmd file).
 
 ```{r histo_lt1.5m}
+ggplot(county_df) + 
+  geom_histogram(aes(x=TotalPop),
+              fill="gray", colour="purple") +
+  ggtitle("Distribution of population for US counties") + xlab("Total Population") + ylab("Number of counties")
 
+```
 
+```{r histo_lt1.5m}
+ggplot(county_df[county_df$TotalPop <= 1500000,]) + geom_histogram(aes(x=TotalPop), fill = "gray", colour = "purple") + ggtitle("Distribution of population for US counties") + xlab("Total Population") + ylab("Number of counties")
 ```
 
 
