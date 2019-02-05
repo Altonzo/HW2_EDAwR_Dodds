@@ -178,14 +178,6 @@ Repeat the histogram but only for counties with less than 1.5 million people. Do
 dplyr to do the filtering - instead, use boolean indexing (see intro to dataframes Rmd file).
 
 ```{r histo_lt1.5m}
-ggplot(county_df) + 
-  geom_histogram(aes(x=TotalPop),
-              fill="gray", colour="purple") +
-  ggtitle("Distribution of population for US counties") + xlab("Total Population") + ylab("Number of counties")
-
-```
-
-```{r histo_lt1.5m}
 ggplot(county_df[county_df$TotalPop <= 1500000,]) + geom_histogram(aes(x=TotalPop), fill = "gray", colour = "purple") + ggtitle("Distribution of population for US counties") + xlab("Total Population") + ylab("Number of counties")
 ```
 
@@ -210,16 +202,33 @@ your graph has a title and good axis labels.
 Do the peninsulas 
 differ with respect to distribution of median income over the counties?
 
-
 ```{r vp_inc_by_peninsula}
+ggplot(county_MI) + geom_violin(aes(x=peninsula, y=Income), fill = "gray", colour = "purple", trim = FALSE) + ggtitle("Income by Peninsula") + xlab("Peninsula") + ylab("Income")
 
+# The peninsulas have a relatively similar median point, around $40,000 give or take.  The UP definitely has fewer extremes, everyone in the UP is pretty much on the same field.
 ```
 
 Create several boxplots showing how the peninsulas compare with respect to
 some of the other variables. Summarize your findings in a few short paragraphs.
 
 ```{r boxplots}
+# The LP has a far higher median income than the UP, with that there is more variation in the LP.  It is so close it seems like you could say the 1st quartile of the LP meets the 3rd quartile of the UP.
+ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=Income), fill = "gray", colour = "purple") + ggtitle("Income by Peninsula") + xlab("Peninsula") + ylab("Income")
 
+# Once again we see high variation in the LP and a relatively tight group in the UP.  It is interesting to see that the boxes are not too far off from each other 
+ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=Poverty), fill = "gray", colour = "purple") + ggtitle("Poverty by Peninsula") + xlab("Peninsula") + ylab("Poverty")
+
+# For some reason this one surprised me as I imagined people living in the UP having to drive far to "get into town" so to speak.  But it would seem that the opposite is true.  I assume this is because the communities in the UP all live in smaller towns and only travel far when need be.  On the other hand, I know many people who drive an hour or more each day to get down to Detroit.  I'm a bad guesser I suppose.
+ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=MeanCommute), fill = "gray", colour = "purple") + ggtitle("Mean Commute by Peninsula") + xlab("Peninsula") + ylab("Mean Commute")
+
+# I was again surpirsed by this one with there being so many professionals in the UP compared to the LP.  This is evident by the mass of the box along the line.  Of course, the LP has higher outliers on this mark, but that was a give away.
+ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=Professional), fill = "gray", colour = "purple") + ggtitle("Professional Job by Peninsula") + xlab("Peninsula") + ylab("Professional")
+
+# From the graph, I can conclude that the UP has a denser population of those that descend from the Angol-Saxon heritage as compared to the LP.
+ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=White), fill = "gray", colour = "purple") + ggtitle("White Ancestry by Peninsula") + xlab("Peninsula") + ylab("White Ancestry")
+
+# From the graph, I can conclude that the UP has a much denser population of those that descend from the Native American heritage as compared to the LP.
+ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=Native), fill = "gray", colour = "purple") + ggtitle("Native Ancestry by Peninsula") + xlab("Peninsula") + ylab("Native")
 ```
 
 In county_df you'll see that there's a Region field. Create a set of faceted 
@@ -227,17 +236,15 @@ histograms showing how unemployment rate compares by region.  Make sure your gra
 labels. 
 
 ```{r faceted_histo}
-ggplot(data = county_df) + ???
+ggplot(county_df) + geom_histogram(aes(x=Unemployment), fill = "gray", colour = "purple") + ggtitle("Unemployment by Region") + xlab("Unemployment") + ylab("Number of Counties") + facet_wrap(~Region)
 
 ```
 
 Now do a group of boxplots of mean commute time by region.
 
 ```{r bp_commute_region}
-ggplot(data = county_df) + ???
-  
-  
-  
+ggplot(county_df) + geom_boxplot(aes(x=Region, y=MeanCommute), fill = "gray", colour = "purple") + ggtitle("Mean Commute by Region") + xlab("Region") + ylab("Mean Commute Time")
+
 ```
 
 ### Problem 6 - Basic bar chart
