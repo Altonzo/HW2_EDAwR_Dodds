@@ -142,13 +142,14 @@ Create a histogram, boxplot, kernel density plot and violin plot for median
 income for the entire US. 
 Write a short paragraph describing the distribution of median incomes.
 
+Median income is centered around approximately $42,000.  It is skewed to the right, where there are very few people earning more than $75,000, relative to the population. Based on the violin plot, the majority of the population lies between $30,000 - $60,000.
 ```{r}
 ggplot(county_df) + geom_histogram(aes(x=Income), fill="red", colour="black")
 ggplot(county_df) + geom_boxplot(aes(x="Boxplot of Median Household Income Across America", y=Income))
 ggplot(county_df) + geom_violin(aes(x="Boxplot of Median Household Income Across America", y=Income))
 ggplot(county_df) + geom_density(aes(x=Income))
 
-# Median income is centered around approximately $42,000.  It is skewed to the right, where there are very few people earning more than $75,000, relative to the population. Based on the violin plot, the majority of the population lies between $30,000 - $60,000.
+
 
 ```
 
@@ -202,32 +203,41 @@ your graph has a title and good axis labels.
 Do the peninsulas 
 differ with respect to distribution of median income over the counties?
 
+The peninsulas have a relatively similar median point, around $40,000 give or take.  The UP definitely has fewer extremes, everyone in the UP is pretty much on the same field.
+
 ```{r vp_inc_by_peninsula}
 ggplot(county_MI) + geom_violin(aes(x=peninsula, y=Income), fill = "gray", colour = "purple", trim = FALSE) + ggtitle("Income by Peninsula") + xlab("Peninsula") + ylab("Income")
 
-# The peninsulas have a relatively similar median point, around $40,000 give or take.  The UP definitely has fewer extremes, everyone in the UP is pretty much on the same field.
+
 ```
 
 Create several boxplots showing how the peninsulas compare with respect to
 some of the other variables. Summarize your findings in a few short paragraphs.
 
+The LP has a far higher median income than the UP, with that there is more variation in the LP.  It is so close it seems like you could say the 1st quartile of the LP meets the 3rd quartile of the UP.
+
+Once again we see high variation in the LP and a relatively tight group in the UP.  It is interesting to see that the boxes are not too far off from each other 
+
+For some reason the third one surprised me as I imagined people living in the UP having to drive far to "get into town" so to speak.  But it would seem that the opposite is true.  I assume this is because the communities in the UP all live in smaller towns and only travel far when need be.  On the other hand, I know many people who drive an hour or more each day to get down to Detroit.  I'm a bad guesser I suppose.
+
+I was again surpirsed by the fourth one with there being so many professionals in the UP compared to the LP.  This is evident by the mass of the box along the line.  Of course, the LP has higher outliers on this mark, but that was a give away.
+
+From the fifth graph, I can conclude that the UP has a denser population of those that descend from the Angol-Saxon heritage as compared to the LP.
+
+From the sixth graph, I can conclude that the UP has a much denser population of those that descend from the Native American heritage as compared to the LP.
+
 ```{r boxplots}
-# The LP has a far higher median income than the UP, with that there is more variation in the LP.  It is so close it seems like you could say the 1st quartile of the LP meets the 3rd quartile of the UP.
+
 ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=Income), fill = "gray", colour = "purple") + ggtitle("Income by Peninsula") + xlab("Peninsula") + ylab("Income")
 
-# Once again we see high variation in the LP and a relatively tight group in the UP.  It is interesting to see that the boxes are not too far off from each other 
 ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=Poverty), fill = "gray", colour = "purple") + ggtitle("Poverty by Peninsula") + xlab("Peninsula") + ylab("Poverty")
 
-# For some reason this one surprised me as I imagined people living in the UP having to drive far to "get into town" so to speak.  But it would seem that the opposite is true.  I assume this is because the communities in the UP all live in smaller towns and only travel far when need be.  On the other hand, I know many people who drive an hour or more each day to get down to Detroit.  I'm a bad guesser I suppose.
 ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=MeanCommute), fill = "gray", colour = "purple") + ggtitle("Mean Commute by Peninsula") + xlab("Peninsula") + ylab("Mean Commute")
 
-# I was again surpirsed by this one with there being so many professionals in the UP compared to the LP.  This is evident by the mass of the box along the line.  Of course, the LP has higher outliers on this mark, but that was a give away.
 ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=Professional), fill = "gray", colour = "purple") + ggtitle("Professional Job by Peninsula") + xlab("Peninsula") + ylab("Professional")
 
-# From the graph, I can conclude that the UP has a denser population of those that descend from the Angol-Saxon heritage as compared to the LP.
 ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=White), fill = "gray", colour = "purple") + ggtitle("White Ancestry by Peninsula") + xlab("Peninsula") + ylab("White Ancestry")
 
-# From the graph, I can conclude that the UP has a much denser population of those that descend from the Native American heritage as compared to the LP.
 ggplot(county_MI) + geom_boxplot(aes(x=peninsula, y=Native), fill = "gray", colour = "purple") + ggtitle("Native Ancestry by Peninsula") + xlab("Peninsula") + ylab("Native")
 ```
 
@@ -254,7 +264,7 @@ your graph has a title and good axis labels. Figure out how to format the
 x-axis labels so that they don't obscure each other.
 
 ```{r bar_counties_by_division}
-ggplot(county_df) + ???
+ggplot(county_df) + geom_bar(aes(x = Division), fill = "gray", colour = "purple") + ggtitle("US Counties by Division") + xlab("Division") + ylab("County") + coord_flip()
 
 ```
 
@@ -264,23 +274,32 @@ Create a scatter plot using the Michigan only data frame comparing
 Income and MeanCommute.
 
 ```{r xy_inc_commute}
-
+ggplot(county_MI) + geom_point(aes(x=Income, y=MeanCommute), fill = "gray", colour = "purple") + ggtitle("Michigan Income by Mean Commute Time") + xlab("Income") + ylab("Mean Commute Time")
 ```
 
 Create a modified version of the above scatter plot in which the point color
 is mapped to peninsula and the size is mapped to total population.
 
 ```{r xy_inc_commute_peninsula}
-
+ggplot(county_MI) + geom_point(aes(x=Income, y=MeanCommute, colour=peninsula,size=TotalPop)) + ggtitle("Michigan Income by Mean Commute Time") + xlab("Income") + ylab("Mean Commute Time")
 ```
 
 Your thoughts on the relationship between these variables?
+
+# Based off this one chart, one might be inclined to conclude that longer commute times lead to higher incomes, but outside of this chart it remains to be seen whether or not this is truly the case.
 
 Now, create a few more scatter plots using variables of your choosing in which
 you facet by peninsula as well. How do the relationships compare across the
 peninsulas?
 
+The first scatter plot shows more clearly that increase unemployment levels may have led to increased poverty levels.  The UP displays a generally flat horizontal line for the same criteria.
+
+The second chart seems to show a slight relation in the LP of production to poverty levels.  Again, the UP is a flat line; I assume this is beause of the small data size.
+
 ```{r xy_faceted_peninsula}
+ggplot(county_MI) + geom_point(aes(x=Unemployment, y=Poverty, colour=peninsula)) + ggtitle("Michigan Unemployment by Poverty") + xlab("Unemployment") + ylab("Poverty") + facet_wrap(~peninsula)
+
+ggplot(county_MI) + geom_point(aes(x=Production, y=Poverty, colour=peninsula)) + ggtitle("Michigan Production to Poverty") + xlab("Production") + ylab("Poverty") + facet_wrap(~peninsula)
 
 ```
 
@@ -289,8 +308,10 @@ Now use the full US data frame.
 
 Create a scatter plot of TotalPop by Income.
 
-```{r xy_pop_inc}
+There seems to be correlation between the income and population size, which fits the narrative of more rural areas having lower wages than in more densly populated areas like cities.
 
+```{r xy_pop_inc}
+ggplot(county_df) + geom_point(aes(x=TotalPop, y=Income), colour="purple") + ggtitle("Michigan Total Population to Income") + xlab("Total Population") + ylab("Income") + scale_x_log10()
 ```
 
 The widely varying values make this difficult to interpret in terms of looking
